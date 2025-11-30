@@ -12,31 +12,41 @@ dotenv.config();
 const app = express();
 const server = createServer(app);
 
-// connect socket
-connectToSocket(server);
 
-// middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://apna-video-call-frontend-zzgp.onrender.com"
+    ],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
+
+
 app.use(express.json({ limit: "40kb" }));
 app.use(express.urlencoded({ limit: "40kb", extended: true }));
 
-// routes
+// Routes
 app.use("/api/v1/users", userRoutes);
 
-// default route
+// Default route
 app.get("/", (req, res) => {
   res.send("Backend is running...");
 });
 
-// port
+// PORT
 const PORT = process.env.PORT || 8000;
 app.set("port", PORT);
 
-
+// START FUNCTION
 const start = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL);
     console.log("MongoDB connected");
+
+    // SOCKET CONNECT (after DB connected)
+    connectToSocket(server);
 
     server.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
@@ -47,3 +57,7 @@ const start = async () => {
 };
 
 start();
+
+
+
+// https://apna-video-call-frontend-zzgp.onrender.com
