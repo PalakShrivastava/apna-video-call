@@ -1,0 +1,124 @@
+.meetVideoContainer {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    background: rgb(37, 39, 60);
+    overflow: hidden;
+}
+
+.meetUserVideo {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    height: 22vh;
+    width: auto;
+    border-radius: 12px;
+    object-fit: cover;
+    z-index: 20;
+    border: 2px solid white;
+}
+
+
+.buttonContainers {
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+    text-align: center;
+    z-index: 30;
+}
+
+.buttonContainers svg {
+    font-size: 3rem;
+}
+
+.conferenceView {
+    display: grid;
+    gap: 16px;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+
+.conferenceView video {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: black;
+  transition: all 0.3s ease;
+}
+
+
+.conferenceView:only-child video,
+.conferenceView > :only-child video {
+  height: 80vh !important;
+  max-width: 90vw !important;
+  margin: auto;
+}
+
+
+.conferenceView > *:nth-child(1):nth-last-child(2) video,
+.conferenceView > *:nth-child(2):nth-last-child(1) video {
+  height: 80vh !important;
+}
+
+
+.nameTag {
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    background: rgba(0,0,0,0.5);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: white;
+    z-index: 50;
+}
+
+
+.chatRoom {
+    position: absolute;
+    height: 90vh;
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    width: 30vw;
+    padding-inline: 20px;
+    z-index: 40;
+}
+
+.chattingDisplay {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.chattingArea {
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  gap: 10px; 
+}
+.buttonsRow {
+  display: flex;
+  gap: 10px; 
+}
+
+
+.lobbyContainer {
+    height: 100vh;
+    background: rgb(37, 39, 60);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: rgb(230, 230, 230);
+    gap: 20px;
+}
+
+.remoteVideo {
+    border-radius: 10px;
+}

@@ -1,0 +1,228 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.landingPageContainer{
+    width: 100vw;
+    height: 100vh;
+    background: url("/images/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.landingPageContainer nav{
+   padding-inline: 1.2rem;
+   padding-block: 1.6rem;
+   display:flex;
+   justify-content: space-between;
+   align-items: center;
+   cursor: pointer;
+}
+
+.landingPageContainer nav h2{
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.landingPageContainer nav .navList{
+     display: flex;
+     gap:1.5rem;
+     margin-right: 1rem;
+}
+
+.navList a {
+  text-decoration: none;   
+  color: white;            
+  font-weight: 500;
+}
+
+.navList a:hover {
+  opacity: 0.8;           
+}
+
+
+.landingMainContainer{
+    display: flex;
+    justify-content: space-between;
+    height: 80vh;
+    align-items: center;
+    padding-inline: 3rem;
+}
+
+.landingMainContainer div{
+    font-size: 2.2rem;
+
+}
+
+.landingMainContainer div p{
+    margin-top: 0.4rem;
+}
+
+
+
+.landingMainContainer>div:nth-child(1) div[role='button'] a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.7rem;
+}
+
+
+.landingMainContainer img{
+    height: 70vh;
+    width: auto;
+}
+
+.getStartedBtn {
+  display: inline-block;
+  background-color: #FF9839;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none; 
+  transition: 0.2s ease;
+  margin-top: 1rem;
+  font-size:2rem ;
+}
+
+.getStartedBtn:hover {
+  background-color: #e67d1a; 
+}
+
+
+/* NAVBAR */
+.navBar {
+  width: 100%;
+  padding: 1.5rem 2.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+
+.navBar h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.navBar p {
+  margin-left: 5px;
+  font-weight: 500;
+}
+
+/* MAIN CONTAINER */
+.meetContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  padding-top: 100px;
+  background: url("/images/background.png");
+  background-size: cover;
+  background-position: center;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 4rem;
+}
+
+/* LEFT PANEL */
+.leftPanel {
+  width: 50%;
+  color: white;
+}
+
+.leftPanel h2 {
+  font-size: 2.7rem;
+  line-height: 3.2rem;
+  max-width: 600px;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.leftPanel div {
+  margin-top: 1rem;
+}
+
+.leftPanel input,
+.leftPanel .MuiOutlinedInput-root {
+   
+  background: white;
+  border-radius: 8px;
+}
+
+.leftPanel button {
+  background: #FF9839 !important;
+  color: white !important;
+   padding: 0rem 1rem !important;
+  font-size: 1rem !important;
+  border-radius: 10px !important;
+  text-transform: none !important;
+  box-shadow: 0 4px 12px rgba(255, 152, 57, 0.4);
+}
+
+.leftPanel button:hover {
+  background: #D97500 !important;
+}
+
+/* RIGHT PANEL */
+.rightPanel {
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rightPanel img {
+  height: 65vh;
+  width: auto;
+  filter: drop-shadow(0 5px 30px rgba(0,0,0,0.4));
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 900px) {
+  .meetContainer {
+    flex-direction: column;
+    padding-inline: 2rem;
+    text-align: center;
+  }
+
+  .leftPanel {
+    width: 100%;
+    margin-top: 40px;
+  }
+
+  .rightPanel {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .rightPanel img {
+    height: 45vh;
+  }
+}
+
+.authImageSection {
+    height: 100%;
+    width: 100%;
+    background-image: url("/images/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    flex : 1;
+}
+
+.authRightPanel {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+}
+
