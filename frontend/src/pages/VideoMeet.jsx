@@ -54,7 +54,11 @@ const VideoMeet = () => {
 
     setAskForUsername(false);
 
-    socketRef.current = io(server_url);
+    socketRef.current = io(server_url, {
+      transports: ["websocket"],
+      secure: true
+    });
+
 
     const stream = await navigator.mediaDevices.getUserMedia({
       video: true,
