@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 export const connectToSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: "https://apna-video-call-frontend-zzgp.onrender.com",
+      origin: "*",
       methods: ["GET", "POST"],
       credentials: true,
     },
