@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import io from "socket.io-client";
 import { Badge, IconButton, TextField, Button } from "@mui/material";
 import VideocamIcon from "@mui/icons-material/Videocam";
@@ -21,11 +21,10 @@ const peerConfig = {
     {
       urls: "turn:relay1.expressturn.com:3478",
       username: "efU8TxJXOz2wCRYc",
-      credential: "S8f7eA2DzfWx9NRv"
-    }
-  ]
+      credential: "S8f7eA2DzfWx9NRv",
+    },
+  ],
 };
-
 
 const VideoMeet = () => {
   const socketRef = useRef(null);
@@ -48,9 +47,14 @@ const VideoMeet = () => {
 
   const [username, setUsername] = useState("");
   const [askForUsername, setAskForUsername] = useState(true);
-  const [showLocalVideo, setShowLocalVideo] = useState(false);
 
   const roomId = window.location.pathname.split("/")[2];
+
+  useEffect(() => {
+    if (!askForUsername && localVideoRef.current && localStreamRef.current) {
+      localVideoRef.current.srcObject = localStreamRef.current;
+    }
+  }, [askForUsername]);
 
   const joinCall = async () => {
     if (!username.trim()) {
@@ -63,48 +67,40 @@ const VideoMeet = () => {
     setAskForUsername(false);
 
     socketRef.current = io(server_url, {
-      transports: ["websocket"],
-      secure: true
+      transports: ["websocket", "polling"],
+      withCredentials: true,
     });
-
 
     const stream = await navigator.mediaDevices.getUserMedia({
       video: {
-        facingMode: "user"
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
+        facingMode: "user",
       },
       audio: {
         echoCancellation: true,
         noiseSuppression: true,
-        autoGainControl: true
-      }
+        autoGainControl: true,
+      },
     });
-
 
     cameraStreamRef.current = stream;
     localStreamRef.current = stream;
-
-    if (localVideoRef.current) {
-      localVideoRef.current.srcObject = stream;
-      setShowLocalVideo(true);
-    }
 
     socketRef.current.emit("join-room", roomId, username);
 
     socketRef.current.on("user-connected", ({ userId, username }) => {
       peersRef.current[userId] = { username };
 
-
       setTimeout(() => {
         createOffer(userId, localStreamRef.current);
       }, 300);
     });
 
-
     socketRef.current.on("offer", ({ offer, from, username }) => {
       peersRef.current[from] = { ...peersRef.current[from], username };
       handleOffer(offer, from, localStreamRef.current);
     });
-
 
     socketRef.current.on("answer", ({ answer, from, username }) => {
       peersRef.current[from] = { ...peersRef.current[from], username };
@@ -281,9 +277,7 @@ const VideoMeet = () => {
     localStreamRef.current?.getTracks().forEach((t) => t.stop());
     cameraStreamRef.current?.getTracks().forEach((t) => t.stop());
 
-    Object.values(peersRef.current).forEach((obj) =>
-      obj.peer?.close()
-    );
+    Object.values(peersRef.current).forEach((obj) => obj.peer?.close());
     peersRef.current = {};
 
     socketRef.current?.disconnect();
@@ -333,19 +327,6 @@ const VideoMeet = () => {
           >
             Connect
           </Button>
-
-          {showLocalVideo && (
-            <div style={{ position: "absolute", bottom: "20px", left: "20px" }}>
-              <video
-                ref={localVideoRef}
-                autoPlay
-                muted
-                className={styles.meetUserVideo}
-              ></video>
-
-              <div className={styles.nameTag}>{username}</div>
-            </div>
-          )}
         </div>
       ) : (
         <div className={styles.meetVideoContainer}>
@@ -415,7 +396,11 @@ const VideoMeet = () => {
                 onClick={screenSharing ? stopScreenShare : startScreenShare}
                 style={{ color: "white" }}
               >
-                {screenSharing ? <StopScreenShareIcon /> : <ScreenShareIcon />}
+                {screenSharing ? (
+                  <StopScreenShareIcon />
+                ) : (
+                  <ScreenShareIcon />
+                )}
               </IconButton>
             )}
 
@@ -432,9 +417,10 @@ const VideoMeet = () => {
           <video
             ref={localVideoRef}
             autoPlay
+            playsInline
             muted
             className={styles.meetUserVideo}
-          ></video>
+          />
 
           <div className={styles.conferenceView}>
             {remoteStreams.map((v) => (
@@ -453,8 +439,7 @@ const VideoMeet = () => {
                   ref={(ref) => {
                     if (ref) ref.srcObject = v.stream;
                   }}
-                ></video>
-
+                />
 
                 <p
                   style={{
