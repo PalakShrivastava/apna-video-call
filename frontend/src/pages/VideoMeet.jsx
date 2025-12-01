@@ -16,8 +16,16 @@ import server from "../environment";
 const server_url = server;
 
 const peerConfig = {
-  iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
+  iceServers: [
+    { urls: "stun:stun.l.google.com:19302" },
+    {
+      urls: "turn:relay1.expressturn.com:3478",
+      username: "efU8TxJXOz2wCRYc",
+      credential: "S8f7eA2DzfWx9NRv"
+    }
+  ]
 };
+
 
 const VideoMeet = () => {
   const socketRef = useRef(null);
@@ -77,13 +85,19 @@ const VideoMeet = () => {
 
     socketRef.current.on("user-connected", ({ userId, username }) => {
       peersRef.current[userId] = { username };
-      createOffer(userId, stream);
+
+
+      setTimeout(() => {
+        createOffer(userId, localStreamRef.current);
+      }, 300);
     });
+
 
     socketRef.current.on("offer", ({ offer, from, username }) => {
       peersRef.current[from] = { ...peersRef.current[from], username };
-      handleOffer(offer, from, stream);
+      handleOffer(offer, from, localStreamRef.current);
     });
+
 
     socketRef.current.on("answer", ({ answer, from, username }) => {
       peersRef.current[from] = { ...peersRef.current[from], username };
