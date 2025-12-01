@@ -15,13 +15,12 @@ const server = createServer(app);
 
 app.use(
   cors({
-    origin: [
-      "https://apna-video-call-frontend-zzgp.onrender.com"
-    ],
+    origin: "*",
     methods: ["GET", "POST"],
     credentials: true,
   })
 );
+
 
 
 app.use(express.json({ limit: "40kb" }));
