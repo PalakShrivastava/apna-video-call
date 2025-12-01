@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import io from "socket.io-client";
 import { Badge, IconButton, TextField, Button } from "@mui/material";
 import VideocamIcon from "@mui/icons-material/Videocam";
@@ -50,6 +50,12 @@ const VideoMeet = () => {
 
   const roomId = window.location.pathname.split("/")[2];
 
+  useEffect(() => {
+    if (localVideoRef.current && localStreamRef.current) {
+      localVideoRef.current.srcObject = localStreamRef.current;
+    }
+  }, [askForUsername]);
+
   const joinCall = async () => {
     if (!username.trim()) {
       alert("Please enter your name");
@@ -78,10 +84,6 @@ const VideoMeet = () => {
 
     cameraStreamRef.current = stream;
     localStreamRef.current = stream;
-
-    if (localVideoRef.current) {
-      localVideoRef.current.srcObject = stream;
-    }
 
     setAskForUsername(false);
 
