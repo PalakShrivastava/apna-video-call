@@ -69,9 +69,16 @@ const VideoMeet = () => {
 
 
     const stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
+      video: {
+        facingMode: "user"
+      },
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: true
+      }
     });
+
 
     cameraStreamRef.current = stream;
     localStreamRef.current = stream;
@@ -440,11 +447,14 @@ const VideoMeet = () => {
               >
                 <video
                   autoPlay
+                  playsInline
+                  muted={false}
                   className={styles.remoteVideo}
                   ref={(ref) => {
                     if (ref) ref.srcObject = v.stream;
                   }}
                 ></video>
+
 
                 <p
                   style={{
