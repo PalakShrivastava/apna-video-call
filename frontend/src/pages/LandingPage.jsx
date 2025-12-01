@@ -9,7 +9,7 @@ function LandingPage() {
                     <h2>Apna Video Call</h2>
                 </div>
                 <div className="navList">
-                    <Link to="/auth">Join as Guest</Link>
+
                     <Link to="/auth">Register</Link>
                     <Link to="/auth">Login</Link>
                    

@@ -6,10 +6,10 @@ import server from "../environment";
 
 export const AuthContext = createContext(null);
 
-// FIXED AXIOS CLIENT CONFIG
+
 const client = axios.create({
     baseURL: server + "/api/v1/users",
-    timeout: 15000, // Render warm-up fix
+    timeout: 15000, 
 });
 
 export const AuthProvider = ({ children }) => {
